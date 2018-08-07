@@ -1,0 +1,161 @@
+//Syifa fauziah, fradita audina//
+
+ program tn;
+uses crt;
+const
+  jml_data = 10;
+type
+  tkar = record
+           i,a : integer
+           nm : string;
+           nim :string
+           js : string;
+           tgs: integer;
+           uts: integer;
+           uas: integer;
+           total: real;
+           hm: string;
+         end;
+  tarr_kar = array [1..jml_data] of tkar;
+
+  function menu:char;
+  begin
+    writeln('*****************');
+    writeln('* 1.Input  Data *');
+    writeln('* 2.Output Data *');
+    writeln('*****************');
+    writeln('* 0.Keluar      *');
+    writeln('*****************');
+    write('Pilih menu : '); menu := readkey;
+  end;
+
+  procedure input_data(idx:integer;var data:tarr_kar);
+  begin
+     {writeln('Data ke-',idx);
+     write('Nama Karyawan        : ');readln(data[idx].nm);
+     write('Golongan (A\B)       : ');readln(data[idx].gol);
+     write('Status (Nikah\Belum) : ');readln(data[idx].status);
+  end;}
+  begin
+  writeln('Data ke-',idx);
+  write('Nama Mahasiswa          : ');readln(data[idx].nm);
+  write('NIM                     : ');readln(data[idx].nim);
+  write('Jurusan (IF/SI)         : ');readln(data[idx].js);
+  write('Nilai Tugas             : ');readln(data[idx].tgs);
+  write('Nilai UTS               : ');readln(data[idx].uts);
+  write('Nilai UAS               : ');readln(data[idx].uas);
+  end;
+end;
+
+  procedure proses_data(var data:tkar);
+  begin
+   { case data.gol of
+      'A' :begin
+             data.gapok := 200000;
+             case data.status of
+               'Nikah' :data.tunja:=50000;
+               'Belum' :data.tunja:=25000;
+             end;
+             data.iuran:=0.05*(data.gapok+data.tunja);
+           end;
+      'B' :begin
+             data.gapok := 350000;
+             case data.status of
+               'Nikah' :data.tunja:=75000;
+               'Belum' :data.tunja:=60000;
+             end;
+             data.iuran:=0.1*(data.gapok+data.tunja);
+           end;
+    end;}
+    data.total:=(data.tgs+data.uts+data.uas)div 3;
+    if (data.total >=90) then
+       data.hm:='A'
+    else
+    if (data.total >=75) then
+       data.hm:='B'
+    else
+    if (data.total >=65)then
+       data.hm:='C'
+    else
+    if (data.total >=50) then
+       data.hm:='D'
+    else
+    if (data.total >=40) then
+       data.hm:='E';
+
+
+    //data.gaber := (data.gapok+data.tunja)-data.iuran;
+  end;
+  procedure tabel;
+begin
+  writeln(' ');
+  writeln('|=====================================================================================|');
+  writeln('|                                DATA NILAI MAHASISWA                                 |');
+  writeln('|=====================================================================================|');
+  writeln('|NO.|  NAMA MAHASISWA  | NIM | JURUSAN | TUGAS | UTS | UAS | TOTAL NILAI | HURUF MUTU |');
+  writeln('|-------------------------------------------------------------------------------------|');
+  for i:=1 to a do
+  begin
+  gotoxy(1,i+6);
+  writeln('|   |                  |     |         |         |    |    |               |          |');
+  writeln('|=====================================================================================|');
+  end;
+end;
+
+  procedure output_data(jml:integer;data:tarr_kar);
+  var
+    i:integer;
+  begin
+    if jml=0 then
+    begin
+       writeln('Tidak Ada Data !');
+       readkey;
+    end
+    else
+         for i:=1 to jml do
+         begin
+           writeln('Data ke-',i);
+           writeln('Nama Mahasiswa       : ',data[i].nm);
+           writeln('NIM                  : ',data[i].nim);
+           writeln('Jurusan(IF/SI)       : ',data[i].js)
+           writeln('Nilai Tugas          : ',data[i].tgs);
+           writeln('Nilai UTS            : ',data[i].uts);
+           writeln('Nilai UAS            : ',data[i].uas);
+           writeln('Total Nilai          : ',data[i].total:0:2);
+           writeln('Huruif Mutu          : ',data[i].hm);
+           writeln;
+         end;
+
+  end;
+
+var
+  no_menu,terus:char;
+  jml_kar:integer;
+  data_kar : tarr_kar;
+begin
+  jml_kar:=0;
+  repeat
+    clrscr;
+    no_menu:=menu;
+    case no_menu of
+     '1' : begin
+            clrscr;
+            repeat
+              input_data(jml_kar+1,data_kar);
+              proses_data(data_kar[jml_kar+1]);
+              jml_kar:=jml_kar+1;
+              writeln;
+              write('Input Data Lagi (y/n) : ');terus:=readkey;
+              writeln;
+              writeln;
+            until(terus='n');
+           end;
+
+     '2' :  begin
+              clrscr;
+              output_data(jml_kar,data_kar);
+              readln;
+            end;
+    end;
+  until(no_menu='0');
+end.
